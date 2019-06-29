@@ -35,8 +35,6 @@ public class DemoAppConfig implements WebMvcConfigurer {
 	private Environment env;
 	
 	private Logger logger = Logger.getLogger(getClass().getName());
-	
-	// define a bean for ViewResolver
 
 	@Bean
 	public DataSource myDataSource() {
