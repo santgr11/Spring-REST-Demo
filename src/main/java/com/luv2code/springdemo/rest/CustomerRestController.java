@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +39,19 @@ public class CustomerRestController {
 			throw new CustomerNotFoundException("Customer id not found - " + customerId );
 		}
 		
-		return customerService.getCustomer(customerId);
+		return customer;
 	}
 	
+	// add mapping for POST /customers - add new customer
+	@PostMapping("/customers")
+	public Customer addCustomer(@RequestBody Customer customer) {
+		
+		// in case the pass and id in JSON ... set id to 0
+		// this way we force to create a new customer instead of update
+		customer.setId(0);
+		
+		customerService.saveCustomer(customer);
+		
+		return customer;
+	}
 }
